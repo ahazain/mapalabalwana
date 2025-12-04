@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "postinstall": "prisma generate --schema=src/prisma/schema.prisma"
+    "postinstall": "npx prisma generate --schema=src/prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",
