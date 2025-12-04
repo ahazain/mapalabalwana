@@ -1,13 +1,16 @@
+import React, { useState } from "react";
+// Pastikan file utama (main.jsx/index.jsx) menggunakan BrowserRouter
 import { Routes, Route, useLocation } from "react-router-dom";
 
 // --- PAGES: AUTH ---
-import LoginPage from "./pages/auth/LoginPage"; // Pastikan file ini ada
+import LoginPage from "./pages/auth/LoginPage";
 import PrivateRoute from "./component/layout/PrivateRoute";
 
 // --- LAYOUT COMPONENTS ---
 import Navbar from "./component/layout/Navbar";
 import Sidebar from "./component/layout-admin/Sidebar";
 import Footer from "./component/layout/Footer";
+
 // --- PAGES: GUEST ---
 import Home from "./pages/guest/Home";
 import GISPage from "./pages/guest/GISPage";
@@ -21,11 +24,10 @@ import Konservasi from "./pages/guest/KonservasiPage";
 import RockClimbing from "./pages/guest/RockClimbingPage";
 import Galeri from "./pages/guest/Galeri";
 import About from "./pages/guest/TentangKami";
-import Kontak_FIX from "./pages/guest/Kontak_FIX";
-import NotFound from "./pages/NotFound"; // Pastikan nama file/folder sesuai (misal: NotFound.jsx)
+import Kontak from "./pages/guest/Kontak"; // ✅ DIUBAH: Hapus _FIX
+import NotFound from "./pages/NotFound";
 
 // --- PAGES: ADMIN ---
-
 import ProdukGIS from "./pages/admin/ProdukGIS";
 import ProdukPortalBerita from "./pages/admin/NewsPortalAdmin";
 import ProdukSistemInformasi from "./pages/admin/SistemInformasiAdmin";
@@ -62,10 +64,17 @@ const Laporan = () => (
 function App() {
   const location = useLocation();
 
+  // Tentukan nama repo Anda untuk basename (penting untuk GitHub Pages)
+  const repoName = "mapalabalwana";
+
   // Cek apakah user berada di halaman admin
-  const isAdminRoute = location.pathname.startsWith("/admin");
+  const isAdminRoute =
+    location.pathname.startsWith(`/${repoName}/admin`) ||
+    location.pathname.startsWith("/admin");
   // Cek apakah user berada di halaman login
-  const isLoginPage = location.pathname === "/login";
+  const isLoginPage =
+    location.pathname.endsWith("/login") ||
+    location.pathname.endsWith(`${repoName}/login`);
 
   return (
     <div className="App font-sans text-slate-800 bg-[#f9fafe] min-h-screen flex flex-col">
@@ -77,7 +86,6 @@ function App() {
         {isAdminRoute && <Sidebar />}
 
         {/* Main Content Area */}
-        {/* Tambahkan margin kiri jika sidebar aktif (Desktop only) */}
         <main className={`flex-1 ${isAdminRoute ? "md:ml-64" : ""}`}>
           <Routes>
             {/* === 1. PUBLIC ROUTES (GUEST) === */}
@@ -91,18 +99,18 @@ function App() {
             <Route path="/divisi/rockclimbing" element={<RockClimbing />} />
             <Route path="/galeri" element={<Galeri />} />
             <Route path="/tentang-kami" element={<About />} />
-            <Route path="/kontak" element={<Kontak_FIX />} />
+            <Route path="/kontak" element={<Kontak />} /> {/* ✅ DIUBAH */}
             <Route path="/sistem-informasi" element={<SistemInformasiPage />} />
             <Route path="/balwana-store" element={<BalwanaStorePage />} />
-
             {/* === 2. AUTH ROUTE === */}
             <Route path="/login" element={<LoginPage />} />
-
             {/* === 3. PROTECTED ADMIN ROUTES === */}
             {/* Semua route di dalam ini butuh Token Login */}
             <Route element={<PrivateRoute />}>
+              {/* Dashboard Index Route */}
+              <Route path="/admin" element={<Produk />} />
+
               {/* Produk */}
-              <Route path="/admin/produk" element={<Produk />} />
               <Route path="/admin/produk/gis" element={<ProdukGIS />} />
               <Route
                 path="/admin/produk/portal-berita"
@@ -138,7 +146,6 @@ function App() {
               <Route path="/admin/laporan" element={<Laporan />} />
               <Route path="/admin/settings" element={<Settings />} />
             </Route>
-
             {/* === 4. NOT FOUND (Catch All) === */}
             <Route path="*" element={<NotFound />} />
           </Routes>
