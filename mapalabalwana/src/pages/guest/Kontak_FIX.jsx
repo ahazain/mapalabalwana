@@ -57,7 +57,7 @@ const icons = {
   ),
 };
 
-const ContactPage = () => {
+const Kontak_FIX = () => {
   // State data organisasi (Default placeholder sebelum fetch)
   const [orgData, setOrgData] = useState({
     name: "Mapala Balwana",
@@ -294,4 +294,4 @@ const ContactPage = () => {
   );
 };
 
-export default ContactPage;
+export default Kontak_FIX;

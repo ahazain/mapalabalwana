@@ -1,6 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 
-
 // --- PAGES: AUTH ---
 import LoginPage from "./pages/auth/LoginPage"; // Pastikan file ini ada
 
@@ -17,7 +16,7 @@ import Konservasi from "./pages/guest/KonservasiPage";
 import RockClimbing from "./pages/guest/RockClimbingPage";
 import Galeri from "./pages/guest/Galeri";
 import About from "./pages/guest/TentangKami";
-import Kontak from "./pages/guest/Kontak";
+import Kontak_FIX from "./pages/guest/Kontak_FIX";
 import NotFound from "./pages/notfound"; // Pastikan nama file/folder sesuai (misal: NotFound.jsx)
 
 // --- PAGES: ADMIN ---
@@ -87,7 +86,7 @@ function App() {
             <Route path="/divisi/rockclimbing" element={<RockClimbing />} />
             <Route path="/galeri" element={<Galeri />} />
             <Route path="/tentang-kami" element={<About />} />
-            <Route path="/kontak" element={<Kontak />} />
+            <Route path="/kontak" element={<Kontak_FIX />} />
             <Route path="/sistem-informasi" element={<SistemInformasiPage />} />
             <Route path="/balwana-store" element={<BalwanaStorePage />} />
 
