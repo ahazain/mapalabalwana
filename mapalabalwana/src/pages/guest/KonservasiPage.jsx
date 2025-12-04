@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import api from "../../services/api";
-import { IMAGE_URL } from "../../services/config";
+import api from "../../services/Api";
+import { IMAGE_URL } from "../../services/Config";
 
 const Icon = ({ path, className }) => (
   <svg
