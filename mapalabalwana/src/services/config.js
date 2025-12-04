@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // Ganti dengan URL backend Anda jika sudah di-deploy
-export const API_BASE_URL = "http://localhost:3000";
-export const IMAGE_URL = "http://localhost:3000"; // Untuk prefix gambar
+export const API_BASE_URL = "https://mapalabalwana.vercel.app";
+export const IMAGE_URL = "https://mapalabalwana.vercel.app"; // Untuk prefix gambar
 
 const apiClient = axios.create({
   baseURL: `${API_BASE_URL}/api/v1`,
