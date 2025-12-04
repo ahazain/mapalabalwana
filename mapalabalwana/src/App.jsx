@@ -1,10 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 
-// --- LAYOUTS ---
-import Navbar from "./component/layout/Navbar";
-import Footer from "./component/layout/Footer";
-import Sidebar from "./component/layout-admin/Sidebar";
-import PrivateRoute from "./component/layout/PrivateRoute"; // Pastikan file ini ada
 
 // --- PAGES: AUTH ---
 import LoginPage from "./pages/auth/LoginPage"; // Pastikan file ini ada
