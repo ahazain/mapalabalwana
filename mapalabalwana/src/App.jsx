@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// Pastikan file utama (main.jsx/index.jsx) menggunakan BrowserRouter
 import { Routes, Route, useLocation } from "react-router-dom";
 
 // --- PAGES: AUTH ---
@@ -24,7 +23,7 @@ import Konservasi from "./pages/guest/KonservasiPage";
 import RockClimbing from "./pages/guest/RockClimbingPage";
 import Galeri from "./pages/guest/Galeri";
 import About from "./pages/guest/TentangKami";
-import Kontak from "./pages/guest/Kontak_FIX"; 
+import Kontak from "./pages/guest/Kontak_FIX"; // ✅ Casing sudah final: Kontak
 import NotFound from "./pages/NotFound";
 
 // --- PAGES: ADMIN ---
@@ -64,17 +63,9 @@ const Laporan = () => (
 function App() {
   const location = useLocation();
 
-  // Tentukan nama repo Anda untuk basename (penting untuk GitHub Pages)
-  const repoName = "mapalabalwana";
-
-  // Cek apakah user berada di halaman admin
-  const isAdminRoute =
-    location.pathname.startsWith(`/${repoName}/admin`) ||
-    location.pathname.startsWith("/admin");
-  // Cek apakah user berada di halaman login
-  const isLoginPage =
-    location.pathname.endsWith("/login") ||
-    location.pathname.endsWith(`${repoName}/login`);
+  // Logic cek path di HashRouter menggunakan location.pathname
+  const isAdminRoute = location.pathname.startsWith("/admin");
+  const isLoginPage = location.pathname === "/login";
 
   return (
     <div className="App font-sans text-slate-800 bg-[#f9fafe] min-h-screen flex flex-col">
@@ -99,13 +90,12 @@ function App() {
             <Route path="/divisi/rockclimbing" element={<RockClimbing />} />
             <Route path="/galeri" element={<Galeri />} />
             <Route path="/tentang-kami" element={<About />} />
-            <Route path="/kontak" element={<Kontak />} /> {/* ✅ DIUBAH */}
+            <Route path="/kontak" element={<Kontak />} /> {/* ✅ Diperbaiki */}
             <Route path="/sistem-informasi" element={<SistemInformasiPage />} />
             <Route path="/balwana-store" element={<BalwanaStorePage />} />
             {/* === 2. AUTH ROUTE === */}
             <Route path="/login" element={<LoginPage />} />
             {/* === 3. PROTECTED ADMIN ROUTES === */}
-            {/* Semua route di dalam ini butuh Token Login */}
             <Route element={<PrivateRoute />}>
               {/* Dashboard Index Route */}
               <Route path="/admin" element={<Produk />} />
