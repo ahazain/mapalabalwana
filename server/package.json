@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js",
-    "postinstall": "npx prisma generate --schema=src/prisma/schema.prisma"
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
