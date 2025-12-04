@@ -1,28 +1,9 @@
 {
   "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "app.js",
-      "use": "@vercel/node"
+      "source": "/(.*)",
+      "destination": "/app.js"
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "app.js"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "app.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "app.js"
-    }
-  ],
-  "build": {
-    "env": {
-      "PRISMA_GENERATE": "true"
-    }
-  }
+  ]
 }
