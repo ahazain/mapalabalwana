@@ -24,7 +24,7 @@ import Konservasi from "./pages/guest/KonservasiPage";
 import RockClimbing from "./pages/guest/RockClimbingPage";
 import Galeri from "./pages/guest/Galeri";
 import About from "./pages/guest/TentangKami";
-import Kontak from "./pages/guest/Kontak"; // ✅ DIUBAH: Hapus _FIX
+import Kontak from "./pages/guest/Kontak_FIX"; 
 import NotFound from "./pages/NotFound";
 
 // --- PAGES: ADMIN ---
