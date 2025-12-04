@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "../../services/api"; // Import API
+import Api from "../../services/Api"; // Import API
 
 /* --- ICONS --- */
 const Icon = ({ path, className }) => (
@@ -76,7 +76,7 @@ const Kontak_FIX = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await api.getSettings();
+        const response = await Api.getSettings();
         if (response.data.status) {
           setOrgData(response.data.data);
         }

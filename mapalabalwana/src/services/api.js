@@ -1,6 +1,6 @@
-import apiClient from "./config";
+import apiClient from "./Config";
 
-const api = {
+const Api = {
   // ==========================================
   // PUBLIC / GUEST REQUESTS (GET ONLY)
   // ==========================================
@@ -106,4 +106,4 @@ const api = {
   updateSettings: (data) => apiClient.put("/settings", data),
 };
 
-export default api;
+export default Api;
