@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../services/Api"; // Import API
-import { IMAGE_URL } from "../../services/Config"; // Import URL Config
+import { IMAGE_URL } from "../../services/config"; // Import URL Config
 
 /* --- 1. ICON COMPONENTS --- */
 const Icon = ({ path, className }) => (
