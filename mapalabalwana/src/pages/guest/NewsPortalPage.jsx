@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../../services/Api";
-import { IMAGE_URL } from "../../services/Config";
+import { IMAGE_URL } from "../../services/config";
 
 /* --- 1. ICON COMPONENTS --- */
 const Icon = ({ path, className }) => (
