@@ -17,7 +17,7 @@ import RockClimbing from "./pages/guest/RockClimbingPage";
 import Galeri from "./pages/guest/Galeri";
 import About from "./pages/guest/TentangKami";
 import Kontak_FIX from "./pages/guest/Kontak_FIX";
-import NotFound from "./pages/notfound"; // Pastikan nama file/folder sesuai (misal: NotFound.jsx)
+import NotFound from "./pages/NotFound";// Pastikan nama file/folder sesuai (misal: NotFound.jsx)
 
 // --- PAGES: ADMIN ---
 
