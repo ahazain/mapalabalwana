@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "../../services/Api";
+import api from "../../services/api";
 import { IMAGE_URL } from "../../services/Config";
 
 /* --- 1. ICON COMPONENTS --- */

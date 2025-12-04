@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Api from "../../services/Api"; // Import API
+import Api from "../../services/api"; // Import API
 
 /* --- ICONS --- */
 const Icon = ({ path, className }) => (
