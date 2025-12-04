@@ -2,7 +2,12 @@ import { Routes, Route, useLocation } from "react-router-dom";
 
 // --- PAGES: AUTH ---
 import LoginPage from "./pages/auth/LoginPage"; // Pastikan file ini ada
+import PrivateRoute from "./component/layout/PrivateRoute";
 
+// --- LAYOUT COMPONENTS ---
+import Navbar from "./component/layout/Navbar";
+import Sidebar from "./component/layout-admin/Sidebar";
+import Footer from "./component/layout/Footer";
 // --- PAGES: GUEST ---
 import Home from "./pages/guest/Home";
 import GISPage from "./pages/guest/GISPage";
@@ -17,7 +22,7 @@ import RockClimbing from "./pages/guest/RockClimbingPage";
 import Galeri from "./pages/guest/Galeri";
 import About from "./pages/guest/TentangKami";
 import Kontak_FIX from "./pages/guest/Kontak_FIX";
-import NotFound from "./pages/NotFound";// Pastikan nama file/folder sesuai (misal: NotFound.jsx)
+import NotFound from "./pages/NotFound"; // Pastikan nama file/folder sesuai (misal: NotFound.jsx)
 
 // --- PAGES: ADMIN ---
 

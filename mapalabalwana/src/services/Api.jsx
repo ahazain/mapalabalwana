@@ -1,4 +1,4 @@
-import apiClient from "./Config";
+import apiClient from "./config";
 
 const Api = {
   // ==========================================
