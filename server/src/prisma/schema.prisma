@@ -1,0 +1,161 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 1. USER (ADMIN)
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  name      String
+  role      String    @default("ADMIN")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  
+  // Relasi
+  articles  Article[]
+
+  @@map("users")
+}
+
+// 2. PORTAL BERITA
+model Article {
+  id        Int       @id @default(autoincrement())
+  title     String
+  slug      String    @unique
+  excerpt   String    @db.Text
+  content   String    @db.Text
+  image     String?
+  category  String
+  tags      String[]
+  status    String    @default("DRAFT") 
+  views     Int       @default(0)
+  
+  authorId  Int
+  author    User      @relation(fields: [authorId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("articles")
+}
+
+// 3. BALWANA STORE
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?  @db.Text
+  price       Decimal  @db.Decimal(10, 2)
+  category    String
+  image       String?
+  stock       Int      @default(0)
+  tag         String?
+  isActive    Boolean  @default(true)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("products")
+}
+
+// 4. PENGURUS
+model Member {
+  id        Int      @id @default(autoincrement())
+  name      String
+  nia       String?
+  position  String
+  division  String
+  role      String
+  period    String
+  major     String
+  year      String
+  photo     String?
+  instagram String?
+  linkedin  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("members")
+}
+
+// 5. GIS MAPS
+model MapData {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?  @db.Text
+  category    String
+  fileUrl     String?
+  fileSize    String?
+  latitude    Float?
+  longitude   Float?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("maps")
+}
+
+// 6. DOKUMEN INTERNAL
+model Document {
+  id          String   @id
+  title       String
+  type        String
+  summary     String?  @db.Text
+  authorName  String   
+  authorNia   String?
+  date        DateTime @db.Date
+  tags        String[] 
+  fileUrl     String
+  fileType    String
+  fileSize    String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("documents")
+}
+
+// 7. GALERI
+model Gallery {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  category    String?
+  imageUrl    String
+  date        DateTime @default(now())
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("galleries")
+}
+
+model Organization {
+  id          Int      @id @default(1) // ID akan selalu 1
+  name        String   @default("Mapala Balwana")
+  email       String   @default("info@mapalabalwana.org")
+  address     String   @db.Text
+  phone       String   @default("+62 812 3456 7890")
+  
+  // Sosmed
+  instagram   String?
+  facebook    String?
+  twitter     String?
+  youtube     String?
+
+  updatedAt   DateTime @updatedAt
+
+  @@map("organization")
+}
