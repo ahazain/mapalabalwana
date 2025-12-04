@@ -1,6 +1,10 @@
 const prisma = require("../configs/prisma");
 const fs = require("fs");
 const path = require("path");
+const {
+  uploadToSupabase,
+  deleteFromSupabase,
+} = require("../services/storageService");
 
 class ArticleController {
   // --- GET ALL ---
@@ -53,25 +57,164 @@ class ArticleController {
     }
   }
 
+  // // --- CREATE ---
+  // static async create(req, res) {
+  //   try {
+  //     // 1. Destrukturisasi data dari body
+  //     const { title, excerpt, content, category, tags, status, readTime } =
+  //       req.body;
+
+  //     // 2. Validasi sederhana
+  //     if (!title || !content) {
+  //       return res
+  //         .status(400)
+  //         .json({ status: false, message: "Judul dan Konten wajib diisi" });
+  //     }
+
+  //     // 3. Generate Slug (title-timestamp)
+  //     const slug =
+  //       title.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + Date.now();
+
+  //     // 4. Proses Tags (String "a,b,c" -> Array ["a", "b", "c"])
+  //     let tagsArray = [];
+  //     if (tags) {
+  //       tagsArray = Array.isArray(tags)
+  //         ? tags
+  //         : tags.split(",").map((t) => t.trim());
+  //     }
+
+  //     // 5. Siapkan Payload
+  //     const articleData = {
+  //       title,
+  //       slug,
+  //       excerpt: excerpt || "",
+  //       content,
+  //       category: category || "Umum",
+  //       tags: tagsArray,
+  //       status: status || "DRAFT",
+  //       // PENTING: Hardcode authorId ke 1 (Admin Pertama) atau ambil dari req.user.id jika sudah login
+  //       authorId: req.user ? req.user.id : 1,
+  //       image: null,
+  //     };
+
+  //     // 6. Handle Image
+  //     if (req.file) {
+  //       articleData.image = `/uploads/${req.file.filename}`;
+  //     }
+
+  //     // 7. Simpan ke DB
+  //     const article = await prisma.article.create({ data: articleData });
+  //     res
+  //       .status(201)
+  //       .json({
+  //         status: true,
+  //         message: "Berita berhasil dibuat",
+  //         data: article,
+  //       });
+  //   } catch (error) {
+  //     console.error("Create Error:", error);
+  //     res.status(500).json({ status: false, message: error.message });
+  //   }
+  // }
+
+  // // --- UPDATE ---
+  // static async update(req, res) {
+  //   try {
+  //     const { id } = req.params;
+  //     const { title, excerpt, content, category, tags, status } = req.body;
+
+  //     // 1. Cari artikel lama
+  //     const oldArticle = await prisma.article.findUnique({
+  //       where: { id: Number(id) },
+  //     });
+  //     if (!oldArticle)
+  //       return res
+  //         .status(404)
+  //         .json({ status: false, message: "Data tidak ditemukan" });
+
+  //     // 2. Proses Tags
+  //     let tagsArray = undefined;
+  //     if (tags) {
+  //       tagsArray = Array.isArray(tags)
+  //         ? tags
+  //         : tags.split(",").map((t) => t.trim());
+  //     }
+
+  //     // 3. Siapkan Data Update (Hanya field yang ada)
+  //     const updateData = {
+  //       title,
+  //       excerpt,
+  //       content,
+  //       category,
+  //       status,
+  //       tags: tagsArray,
+  //     };
+
+  //     // 4. Handle Image Update
+  //     if (req.file) {
+  //       // Hapus gambar lama jika ada dan bukan link eksternal
+  //       if (oldArticle.image && oldArticle.image.startsWith("/uploads/")) {
+  //         const oldPath = path.join(
+  //           __dirname,
+  //           "../../public",
+  //           oldArticle.image
+  //         );
+  //         if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+  //       }
+  //       updateData.image = `/uploads/${req.file.filename}`;
+  //     }
+
+  //     // 5. Eksekusi Update
+  //     const article = await prisma.article.update({
+  //       where: { id: Number(id) },
+  //       data: updateData,
+  //     });
+
+  //     res.json({
+  //       status: true,
+  //       message: "Berita berhasil diupdate",
+  //       data: article,
+  //     });
+  //   } catch (error) {
+  //     console.error("Update Error:", error);
+  //     res.status(500).json({ status: false, message: error.message });
+  //   }
+  // }
+
+  // // --- DELETE ---
+  // static async delete(req, res) {
+  //   try {
+  //     const id = Number(req.params.id);
+
+  //     // Cari data untuk hapus gambar
+  //     const article = await prisma.article.findUnique({ where: { id } });
+
+  //     if (article && article.image && article.image.startsWith("/uploads/")) {
+  //       const filePath = path.join(__dirname, "../../public", article.image);
+  //       if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+  //     }
+
+  //     await prisma.article.delete({ where: { id } });
+  //     res.json({ status: true, message: "Deleted" });
+  //   } catch (error) {
+  //     res.status(500).json({ status: false, message: error.message });
+  //   }
+  // }
   // --- CREATE ---
   static async create(req, res) {
     try {
-      // 1. Destrukturisasi data dari body
       const { title, excerpt, content, category, tags, status, readTime } =
         req.body;
 
-      // 2. Validasi sederhana
       if (!title || !content) {
         return res
           .status(400)
           .json({ status: false, message: "Judul dan Konten wajib diisi" });
       }
 
-      // 3. Generate Slug (title-timestamp)
       const slug =
         title.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" + Date.now();
 
-      // 4. Proses Tags (String "a,b,c" -> Array ["a", "b", "c"])
       let tagsArray = [];
       if (tags) {
         tagsArray = Array.isArray(tags)
@@ -79,7 +222,6 @@ class ArticleController {
           : tags.split(",").map((t) => t.trim());
       }
 
-      // 5. Siapkan Payload
       const articleData = {
         title,
         slug,
@@ -88,17 +230,16 @@ class ArticleController {
         category: category || "Umum",
         tags: tagsArray,
         status: status || "DRAFT",
-        // PENTING: Hardcode authorId ke 1 (Admin Pertama) atau ambil dari req.user.id jika sudah login
         authorId: req.user ? req.user.id : 1,
         image: null,
       };
 
-      // 6. Handle Image
+      // Handle Upload ke Supabase
       if (req.file) {
-        articleData.image = `/uploads/${req.file.filename}`;
+        const url = await uploadToSupabase(req.file);
+        articleData.image = url;
       }
 
-      // 7. Simpan ke DB
       const article = await prisma.article.create({ data: articleData });
       res
         .status(201)
@@ -119,7 +260,6 @@ class ArticleController {
       const { id } = req.params;
       const { title, excerpt, content, category, tags, status } = req.body;
 
-      // 1. Cari artikel lama
       const oldArticle = await prisma.article.findUnique({
         where: { id: Number(id) },
       });
@@ -128,7 +268,6 @@ class ArticleController {
           .status(404)
           .json({ status: false, message: "Data tidak ditemukan" });
 
-      // 2. Proses Tags
       let tagsArray = undefined;
       if (tags) {
         tagsArray = Array.isArray(tags)
@@ -136,7 +275,6 @@ class ArticleController {
           : tags.split(",").map((t) => t.trim());
       }
 
-      // 3. Siapkan Data Update (Hanya field yang ada)
       const updateData = {
         title,
         excerpt,
@@ -146,21 +284,17 @@ class ArticleController {
         tags: tagsArray,
       };
 
-      // 4. Handle Image Update
+      // Handle Upload Update
       if (req.file) {
-        // Hapus gambar lama jika ada dan bukan link eksternal
-        if (oldArticle.image && oldArticle.image.startsWith("/uploads/")) {
-          const oldPath = path.join(
-            __dirname,
-            "../../public",
-            oldArticle.image
-          );
-          if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+        // Hapus gambar lama di cloud
+        if (oldArticle.image) {
+          await deleteFromSupabase(oldArticle.image);
         }
-        updateData.image = `/uploads/${req.file.filename}`;
+        // Upload baru
+        const url = await uploadToSupabase(req.file);
+        updateData.image = url;
       }
 
-      // 5. Eksekusi Update
       const article = await prisma.article.update({
         where: { id: Number(id) },
         data: updateData,
@@ -181,13 +315,10 @@ class ArticleController {
   static async delete(req, res) {
     try {
       const id = Number(req.params.id);
-
-      // Cari data untuk hapus gambar
       const article = await prisma.article.findUnique({ where: { id } });
 
-      if (article && article.image && article.image.startsWith("/uploads/")) {
-        const filePath = path.join(__dirname, "../../public", article.image);
-        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+      if (article && article.image) {
+        await deleteFromSupabase(article.image);
       }
 
       await prisma.article.delete({ where: { id } });

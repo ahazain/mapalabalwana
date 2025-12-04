@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const upload = require("../middlewares/upload");
-const processImage = require("../middlewares/processImage");
+// const processImage = require("../middlewares/processImage");
 // Import Auth Middleware
 const authMiddleware = require("../middlewares/authMiddleware");
 const SettingController = require("../controllers/SettingController");
@@ -49,14 +49,14 @@ router.post(
   "/members",
   authMiddleware,
   upload.single("photo"),
-  processImage,
+  // processImage,
   MemberController.create
 );
 router.put(
   "/members/:id",
   authMiddleware,
   upload.single("photo"),
-  processImage,
+  // processImage,
   MemberController.update
 );
 router.delete("/members/:id", authMiddleware, MemberController.delete);
@@ -66,14 +66,14 @@ router.post(
   "/articles",
   authMiddleware,
   upload.single("image"),
-  processImage,
+  // processImage,
   ArticleController.create
 );
 router.put(
   "/articles/:id",
   authMiddleware,
   upload.single("image"),
-  processImage,
+  // processImage,
   ArticleController.update
 );
 router.delete("/articles/:id", authMiddleware, ArticleController.delete);
@@ -83,14 +83,14 @@ router.post(
   "/products",
   authMiddleware,
   upload.single("image"),
-  processImage,
+  // processImage,
   ProductController.create
 );
 router.put(
   "/products/:id",
   authMiddleware,
   upload.single("image"),
-  processImage,
+  // processImage,
   ProductController.update
 );
 router.delete("/products/:id", authMiddleware, ProductController.delete);
@@ -100,14 +100,14 @@ router.post(
   "/maps",
   authMiddleware,
   upload.single("file"),
-  processImage,
+  // processImage,
   MapController.create
 );
 router.put(
   "/maps/:id",
   authMiddleware,
   upload.single("file"),
-  processImage,
+  // processImage,
   MapController.update
 );
 router.delete("/maps/:id", authMiddleware, MapController.delete);
@@ -117,14 +117,14 @@ router.post(
   "/documents",
   authMiddleware,
   upload.single("file"),
-  processImage,
+  // processImage,
   DocumentController.create
 );
 router.put(
   "/documents/:id",
   authMiddleware,
   upload.single("file"),
-  processImage,
+  // processImage,
   DocumentController.update
 );
 router.delete("/documents/:id", authMiddleware, DocumentController.delete);
@@ -134,14 +134,14 @@ router.post(
   "/galleries",
   authMiddleware,
   upload.single("image"),
-  processImage,
+  // processImage,
   GalleryController.create
 );
 router.put(
   "/galleries/:id",
   authMiddleware,
   upload.single("image"),
-  processImage,
+  // processImage,
   GalleryController.update
 );
 router.delete("/galleries/:id", authMiddleware, GalleryController.delete);
